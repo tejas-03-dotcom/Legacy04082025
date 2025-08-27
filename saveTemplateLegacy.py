@@ -60,16 +60,67 @@ async def run():
         await page.wait_for_timeout(5000)
 
         print ("✅ Save as template modal opened.")
-        """modal = page.locator("#_rptOpts__rptOptsDS__optsDs__optsTog_float_saveTemplateModal")
+        await page.click("#_categoriesDS_Toggle__sortList_ctl01_sect__selectedCb")
+        print("✅ Category selected.")
+        await page.click("#_rptOpts__rptOptsDS__optsDs__optsTog__templateSaveImg")
+        print("✅ Template save button clicked.")
+        modal=page.locator("#_rptOpts__rptOptsDS__optsDs__optsTog_float_saveTemplateModal")
         await modal.wait_for(state="visible", timeout=10000)
-
-        await page.fill("#_rptOpts__rptOptsDS__optsDs__optsTog_float_saveTemplateModal__templateSaveTxt", "Test Template")
+        print("✅ Save template modal is visible.")
+        # Step 9: Fill template name and save
+        await page.fill("#_rptOpts__rptOptsDS__optsDs__optsTog_float_saveTemplateModal__templateSaveTxt", "Test Template4")
         await page.wait_for_load_state("load")
         await page.click("#_rptOpts__rptOptsDS__optsDs__optsTog_float_saveTemplateModal__templateSaveCancel__saveBtn")
-        print("✅ Template saved as 'Test Template'.")"""
+        print("✅ Template saved as 'Test Template'.")
+        await page.wait_for_timeout(2000)
+        """ # Step 10: Generate report
+        await page.click("#_rptOpts__rptOptsDS__optsDs__optsTog__generateReportBtn")
+        print("✅ Report generation initiated.")
+        await page.wait_for_load_state("load")
+        await page.wait_for_timeout(5000)
+        await page.wait_for_selector("body > div.wrapper", state="visible", timeout=10000)
+        modal = page.locator("body > div.wrapper")
+        if not await modal.is_visible():
+            print("Element is not visible. Check the selector or triggering action.")
+        else:
+            print("✅ Element is visible.")
+        # Step 11: download report
+        await page.wait_for_selector("#report-item-24863997 > td:nth-child(3) > span > a", state="visible", timeout=10000)
+        await page.click("xpath=//*[@id='report-item-24864021']/td[3]/span/a")"""
+        # Step 10: Generate report
+        await page.click("#_rptOpts__rptOptsDS__optsDs__optsTog__generateReportBtn")
+        print("✅ Report generation initiated.")
+        await page.wait_for_load_state("load")
+        await page.wait_for_timeout(5000)
+        """await page.wait_for_selector("body > div.wrapper", state="visible", timeout=30000)
+        #modal = page.locator("body > div.wrapper")"""
+        """if not await modal.is_visible():
+            print("Element is not visible. Check the selector or triggering action.")
+        else:
+            print("✅ Element is visible.")"""
+
+        # Step 11: Download latest report (automatically select latest row)
+        """print("🔍 Looking for latest report...")
+        # Click the first report item link to download
+        # Adjust the selector to match the latest report item
+        # Example: Click the first report item link to download
+        # await page.click("#report-item-24864021 > td:nth-child(3) > span > a")
+        await page.click("//*[@id='report-item-2486412']/td[3]/span/a")
+
+        rows = page.locator("tr[id^='report-item-']")  # Matches all rows with dynamic IDs like 'report-item-24864021'
+
+        # Wait until at least one report row is present
+        await page.wait_for_selector("tr[id^='report-item-'] td:nth-child(3) > span > a", timeout=10000)
+
+        # Get the first (latest) row's download link
+        latest_link = rows.first.locator("td:nth-child(3) > span > a")
+
+        # Click to download the report
+        await latest_link.click()
+        print("✅ Latest report download link clicked.")"""
 
         # Keep browser open briefly for confirmation
-        await page.wait_for_timeout(5000)
+        await page.wait_for_timeout(10000)
 
         # Optional: Close browser
         # await browser.close()
