@@ -70,7 +70,7 @@ async def generate_as_pdf_binder_all_document():
         save_path = await manage_download(
             page,
             button_selector="#rc_genPDF",  # Excel/PDF download button
-            download_path=r"D:\Legacy04082025\downloads",
+            download_path=r"C:\Users\renny_kurian\PycharmProjects\DTI_ReportBuilder_Services\features\LegacyProductionAutomation\downloads",
             file_name="BinderReport_dontknowWhatfor.pdf"
         )
 
